@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.epsystem.epfood.EpfoodApplication;
 import com.epsystem.epfood.domain.entity.Cozinha;
+import com.epsystem.epfood.domain.repository.CozinhaRepository;
 
 public class AlteracaoCozinhaMain {
 
@@ -14,11 +15,12 @@ public class AlteracaoCozinhaMain {
 			.web(WebApplicationType.NONE)
 			.run(args);
 		
-		CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+		CozinhaRepository cozinhaRepository = applicationContext.getBean(CozinhaRepository.class);
 		
 		Cozinha cozinha1 = new Cozinha();
-		cozinha1.setId(1L);	
+		cozinha1.setId(1L);
+		cozinha1.setNome("Polonesa");
 		
-		cadastroCozinha.remover(cozinha1);
+		cozinhaRepository.salvar(cozinha1);
 	}
 }
