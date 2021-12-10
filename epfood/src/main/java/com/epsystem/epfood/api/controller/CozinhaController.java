@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epsystem.epfood.domain.entity.Cozinha;
+import com.epsystem.epfood.domain.exception.EntidadeEmUsoException;
+import com.epsystem.epfood.domain.exception.EntidadeNaoEncontradaException;
 import com.epsystem.epfood.domain.repository.CozinhaRepository;
 import com.epsystem.epfood.domain.service.CadastroCozinhaService;
 
@@ -28,7 +30,7 @@ public class CozinhaController {
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 
@@ -62,7 +64,7 @@ public class CozinhaController {
 			// cozinhaAtual.setNome(cozinha.getNome());
 			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 
-			cozinhaRepository.salvar(cozinhaAtual);
+			cozinhaAtual = cadastroCozinha.salvar(cozinhaAtual);
 			return ResponseEntity.ok(cozinhaAtual);
 		}
 		return ResponseEntity.notFound().build();
@@ -71,15 +73,13 @@ public class CozinhaController {
 	@DeleteMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
 		try {
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-		
-		if (cozinha != null) {
-		cozinhaRepository.remover(cozinha);
-		
-		return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.notFound().build();
-		} catch (DataIntegrityViolationException e) {
+			cadastroCozinha.excluir(cozinhaId);
+			return ResponseEntity.noContent().build();
+
+		} catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.notFound().build();
+			
+		} catch (EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
