@@ -4,22 +4,24 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Component;
 
 import com.epsystem.epfood.domain.entity.Estado;
 import com.epsystem.epfood.domain.repository.EstadoRepository;
 
-@Repository
-public class EstadoRepositoryImpl implements EstadoRepository {
+@Component
+public class EstadoReposioryImpl implements EstadoRepository {
 
 	@PersistenceContext
+
 	private EntityManager manager;
-	
+
 	@Override
 	public List<Estado> listar() {
-		return manager.createQuery("from Estado", Estado.class)
-				.getResultList();
+		return manager.createQuery("from Estado", Estado.class).getResultList();
 	}
 
 	@Override
@@ -27,15 +29,22 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 		return manager.find(Estado.class, id);
 	}
 
+	@Transactional
 	@Override
 	public Estado salvar(Estado estado) {
 		return manager.merge(estado);
 	}
 
+	@Transactional
 	@Override
-	public void remover(Estado estado) {
-		estado = buscar(estado.getId());
-		manager.remove(estado);		
+	public void remover(Long id) {
+		Estado estado = buscar(id);
+
+		if (estado == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+
+		manager.remove(estado);
 	}
 
 }
