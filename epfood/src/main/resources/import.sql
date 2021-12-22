@@ -17,10 +17,10 @@ insert into cidade (id, nome, estado_id) values (4, 'Santarém', 3);
 insert into cidade (id, nome, estado_id) values (5, 'Manaus', 2);
 insert into cidade (id, nome, estado_id) values (6, 'São Paulo', 4);
 
-/*insert into forma_pagamento (id. descricao) values (1, 'cartão de crédito');
-insert into forma_pagamento (id. descricao) values (2, 'cartão de débito');
-insert into forma_pagamento (id. descricao) values (3, 'Dinheiro');
-insert into forma_pagamento (id. descricao) values (4, 'Pix');
+insert into forma_pagamento (id, descricao) values (1, 'cartão de crédito');
+insert into forma_pagamento (id, descricao) values (2, 'cartão de débito');
+insert into forma_pagamento (id, descricao) values (3, 'Dinheiro');
+insert into forma_pagamento (id, descricao) values (4, 'Pix');
 
 insert into permissao(id, nome, descricao) values (1, 'CONSULTAR_COZINHA', 'Permite consultar cozinhas');
-insert into permissao(id, nome, descricao) values (1, 'EDITAR_COZINHA', 'Permite editar cozinhas');*/
+insert into permissao(id, nome, descricao) values (2, 'EDITAR_COZINHA', 'Permite editar cozinhas');
