@@ -26,8 +26,8 @@ public class RestauranteRepositoryImpl implements RestauranteRepositpryQueries {
 		
 		return manager.createQuery(jpql, Restaurante.class)
 				.setParameter("nome","%" + nome + "%")
-				.setParameter("taxainicial", taxaFreteInicial)
-				.setParameter("TaxaFinal", taxaFreteFinal)
+				.setParameter("taxaInicial", taxaFreteInicial)
+				.setParameter("taxaFinal", taxaFreteFinal)
 				.getResultList();
 	}
 		
